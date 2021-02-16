@@ -70,11 +70,11 @@ public class Percolation {
         check(row);
         check(col);
         int position = getPosition(row, col);
-        return lattice [position] == BLOCKED;
+        return data.find(position) == data.find(mostTop);
     }
 
     // returns the number of open sites
-    public int numberOfOpenSit2es() {
+    public int numberOfOpenSites() {
         return opened;
     }
 
@@ -86,7 +86,7 @@ public class Percolation {
     private int getPosition(int row, int col) {
         if (col > size || col == 0 || row > size || row == 0)
             return -1;
-        return size * (row - 1) + col;
+        return size * (row - 1) + col - 1;
     }
 
     private void check(int n) {
@@ -103,7 +103,7 @@ public class Percolation {
         percolation.open(4, 1);
         percolation.open(5, 1);
         if (percolation.percolates()) {
-            System.out.println("opened: " + percolation.numberOfOpenSit2es());
+            System.out.println("opened: " + percolation.numberOfOpenSites());
             System.out.println("Percolates");
         }
     }
