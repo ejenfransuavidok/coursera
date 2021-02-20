@@ -6,9 +6,31 @@ import java.util.NoSuchElementException;
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class Node<Item> {
-        Node next;
-        Node prev;
+        Node<Item> next;
+        Node<Item> prev;
         Item item;
+    }
+
+    private class ListIterator<Item> implements Iterator<Item> {
+
+        private Node current = last;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Item next() {
+            if (current == null)
+                throw new NoSuchElementException();
+            return (Item) sample();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     private Node<Item> first = null;
@@ -50,18 +72,45 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (size == 0)
             throw new NoSuchElementException();
-        StdRandom.uniform()
+        int rnd = StdRandom.uniform(size);
+        Node<Item> current = first;
+        for (int i=0; i<rnd; i++) {
+            current = current.next;
+        }
+        if (size == 1) {
+            first = last = null;
+        }
+        else if (current == first) {
+            first = first.next;
+            first.prev = null;
+        }
+        else if (current == last) {
+            last = last.prev;
+            last.next = null;
+        }
+        else {
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+        size--;
+        return current.item;
     }
 
     // return a random item (but do not remove it)
     public Item sample() {
         if (size == 0)
             throw new NoSuchElementException();
+        int rnd = StdRandom.uniform(size);
+        Node<Item> current = first;
+        for (int i=0; i<rnd; i++) {
+            current = current.next;
+        }
+        return current.item;
     }
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
-
+        return new ListIterator<>();
     }
 
     // unit testing (required)
