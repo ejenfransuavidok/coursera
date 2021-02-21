@@ -13,18 +13,35 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class ListIterator<Item> implements Iterator<Item> {
 
-        private Node current = last;
+        private Node current;
+        private boolean markers [];
+        private int capacity;
+
+        public ListIterator() {
+            current = last;
+            markers = new boolean[size];
+            capacity = size;
+        }
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return capacity != 0;
         }
 
         @Override
         public Item next() {
-            if (current == null)
+            if (capacity == 0)
                 throw new NoSuchElementException();
-            return (Item) sample();
+            int rnd = StdRandom.uniform(size);
+            while (markers [rnd])
+                rnd = StdRandom.uniform(size);
+            markers [rnd] = true;
+            capacity--;
+            Node current = first;
+            for (int i=0; i<rnd; i++) {
+                current = current.next;
+            }
+            return (Item)current.item;
         }
 
         @Override

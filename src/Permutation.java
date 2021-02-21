@@ -1,18 +1,16 @@
-import java.util.Arrays;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Permutation {
 
     public static void main(String[] args) {
-        RandomizedQueue<String> queue = new RandomizedQueue<>();
-        int n = Integer.parseInt(args [0]);
-        for (String s : Arrays.copyOfRange(args, 1, args.length)) {
-            queue.enqueue(s);
-            n--;
-            if (n == 0)
-                break;
-        }
-        while (!queue.isEmpty()) {
-            System.out.println(queue.dequeue());
+        int n = 5;
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+        for (int i = 0; i < n; i++)
+            queue.enqueue(i);
+        for (int a : queue) {
+            for (int b : queue)
+                StdOut.print(a + "-" + b + " ");
+            StdOut.println();
         }
     }
 
