@@ -4,9 +4,11 @@ public class FastCollinearPoints {
     }
 
     public int numberOfSegments() {                // the number of line segments
+        return 0;
     }
 
     public LineSegment[] segments() {              // the line segments
+        return null;
     }
 
 }
