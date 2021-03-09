@@ -3,5 +3,5 @@
 *.jar
 /out/
 *.zip
-/collinear/
+/puzzles/
 *.txt
